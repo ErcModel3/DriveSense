@@ -1,6 +1,6 @@
 import cv2
 import sys
-
+import datetime
 
 def start_camera():
     # Can change the parameter (0) to whatever camera the device needs to pull from
@@ -23,9 +23,21 @@ def start_camera():
 
         cv2.imshow('Live Camera Feed', frame)
 
-        # Wait for 'q' key to quit
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        # The keypress handler bit
+        key = cv2.waitKey(1) & 0xFF
+
+        if key == ord('q'):
             break
+
+        elif key == ord('s'):
+
+            timestamp = datetime.datetime.now()
+            filename = "../raw_data/Camera_" + str(timestamp) + ".jpg"
+            cv2.imwrite(filename, frame)
+        #
+        # # Wait for 'q' key to quit
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+        #     break
 
     cap.release()
     cv2.destroyAllWindows()
