@@ -30,13 +30,10 @@ def start_camera():
             break
 
         elif key == ord('s'):
-
-            # raw_time = datetime.now()
-            # timestamp = raw_time.strftime('%Y%m%d_%H%M%S')
-
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = "../raw_data/Camera_" + str(timestamp) + ".jpg"
+            timestamp = datetime.now()
+            filename = "raw_data/Test_" + str(timestamp) + ".jpg"
             cv2.imwrite(filename, frame)
+            print("Image saved as: ", filename)
 
     cap.release()
     cv2.destroyAllWindows()
