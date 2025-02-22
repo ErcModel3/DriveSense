@@ -12,9 +12,9 @@ def detect(img, model):
     # bothering with extra-small
     # dots that would look like STOP signs
     data = cv2.CascadeClassifier(model)
-
-    boxes = [] + data.data.detectMultiScale(img_gray, minSize =(20, 20))
-    
+    boxes = data.detectMultiScale(img_gray, minSize =(20, 20))
+    if boxes is None:
+        return []
     return boxes
           
 def tracking():
@@ -38,10 +38,10 @@ def tracking():
 
     ret, frame = cap.read()
     if ret:
-        init_box0 = detect(frame, 'haarcascade_lefteye_2splits.xml')
-        init_box1 = detect(frame, 'haarcascade_righteye_2splits.xml')
+        init_box0 = detect(frame, 'Eye_Tracking/haarcascade_lefteye_2splits.xml')
+        init_box1 = detect(frame, 'Eye_Tracking/haarcascade_righteye_2splits.xml')
         trackers[0].init(frame, init_box0[0])
-        trackers[1].init(frame, init_box1[1])
+        trackers[1].init(frame, init_box1[0])
 
     # ret, frame = cap.read()
     # if ret:
@@ -55,8 +55,8 @@ def tracking():
         ret, frame = cap.read()
 
         if consec_failures > 50:
-            init_box0 = detect(frame, 'haarcascade_lefteye_2splits.xml')
-            init_box1 = detect(frame, 'haarcascade_righteye_2splits.xml')
+            init_box0 = detect(frame, 'Eye_Tracking/haarcascade_lefteye_2splits.xml')
+            init_box1 = detect(frame, 'Eye_Tracking/haarcascade_righteye_2splits.xml')
             if len(init_box0) > 0 and len(init_box1) > 0:
                 trackers[0] = cv2.TrackerKCF_create()
                 trackers[0].init(frame, init_box0[0])
