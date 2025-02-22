@@ -39,8 +39,6 @@ def tracking():
     while len(init_box0) == 0 or len(init_box1) == 0:
         ret, frame = cap.read()
         if ret:
-            print("balls")
-
             init_box0 = detect(frame, 'Eye_Tracking/haarcascade_lefteye_2splits.xml')
             init_box1 = detect(frame, 'Eye_Tracking/haarcascade_righteye_2splits.xml')
             
