@@ -50,9 +50,9 @@ with mp_face_mesh.FaceMesh(
         forward_vector /= np.linalg.norm(forward_vector)
         
         # angle of face from xz plane (0 is looking straight ahead, negative is looking down)
-        angle_from_xz = np.arctan(forward_vector[1] / forward_vector[2])
+        angle_from_xz = np.arctan2(forward_vector[1], forward_vector[2])
         # angle of face from yz plane
-        angle_from_yz = np.arctan(forward_vector[0] / forward_vector[2])
+        angle_from_yz = np.arctan2(forward_vector[0], forward_vector[2])
 
         # calculate running avg of the angle from the xz plane
         pool[index] = angle_from_xz
