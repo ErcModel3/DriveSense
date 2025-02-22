@@ -12,9 +12,10 @@ def detect(img, model):
     # bothering with extra-small
     # dots that would look like STOP signs
     data = cv2.CascadeClassifier(model)
+
+    boxes = [] + data.data.detectMultiScale(img_gray, minSize =(20, 20))
     
-    return data.detectMultiScale(img_gray, 
-                                   minSize =(20, 20))
+    return boxes
           
 def tracking():
     # Can change the parameter (0) to whatever camera the device needs to pull from
@@ -39,8 +40,8 @@ def tracking():
     if ret:
         init_box0 = detect(frame, 'haarcascade_lefteye_2splits.xml')
         init_box1 = detect(frame, 'haarcascade_righteye_2splits.xml')
-        trackers[0].init(frame, init_box0[i])
-        trackers[1].init(frame, init_box1[i])
+        trackers[0].init(frame, init_box0[0])
+        trackers[1].init(frame, init_box1[1])
 
     # ret, frame = cap.read()
     # if ret:
