@@ -1,6 +1,6 @@
 import cv2
 import sys
-import datetime
+from datetime import datetime
 
 def start_camera():
     # Can change the parameter (0) to whatever camera the device needs to pull from
@@ -31,7 +31,10 @@ def start_camera():
 
         elif key == ord('s'):
 
-            timestamp = datetime.datetime.now()
+            # raw_time = datetime.now()
+            # timestamp = raw_time.strftime('%Y%m%d_%H%M%S')
+
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
             filename = "../raw_data/Camera_" + str(timestamp) + ".jpg"
             cv2.imwrite(filename, frame)
 
