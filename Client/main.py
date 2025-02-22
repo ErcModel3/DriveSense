@@ -34,10 +34,6 @@ def start_camera():
             timestamp = datetime.datetime.now()
             filename = "../raw_data/Camera_" + str(timestamp) + ".jpg"
             cv2.imwrite(filename, frame)
-        #
-        # # Wait for 'q' key to quit
-        # if cv2.waitKey(1) & 0xFF == ord('q'):
-        #     break
 
     cap.release()
     cv2.destroyAllWindows()
