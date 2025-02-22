@@ -26,8 +26,8 @@ def tracking():
     trackers = []
     for i in range(NUM_TRACKERS):
         trackers.append(cv2.TrackerKCF_create())
-    init_box0 = None  # Assuming init_box is the bounding box of detected object
-    init_box1 = None
+    init_box0 = []  # Assuming init_box is the bounding box of detected object
+    init_box1 = []
 
     # Check if camera opened successfully
     if not cap.isOpened():
@@ -36,12 +36,15 @@ def tracking():
 
     print("Camera opened successfully! Press 'q' to quit")
 
-    ret, frame = cap.read()
-    if ret:
-        init_box0 = detect(frame, 'Eye_Tracking/haarcascade_lefteye_2splits.xml')
-        init_box1 = detect(frame, 'Eye_Tracking/haarcascade_righteye_2splits.xml')
-        trackers[0].init(frame, init_box0[0])
-        trackers[1].init(frame, init_box1[0])
+    while len(init_box0) == 0 or len(init_box1) == 0:
+        ret, frame = cap.read()
+        if ret:
+            init_box0 = detect(frame, 'Eye_Tracking/haarcascade_lefteye_2splits.xml')
+            init_box1 = detect(frame, 'Eye_Tracking/haarcascade_righteye_2splits.xml')
+            
+            if len(init_box0) > 0 and len(init_box1) > 0:
+                trackers[0].init(frame, init_box0[0])
+                trackers[1].init(frame, init_box1[0])
 
     # ret, frame = cap.read()
     # if ret:
